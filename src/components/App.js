@@ -17,8 +17,8 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    // this._authenticate = this._authenticate.bind(this)
-    // this._handleAuth = this._handleAuth.bind(this)
+    this._authenticate = this._authenticate.bind(this)
+    this._handleAuth = this._handleAuth.bind(this)
 
   }
 
@@ -28,7 +28,7 @@ class App extends Component {
 
   _authenticate(e) {
     e.preventDefault();
-    checkAuth(false, this._handleAuth.bind(this));
+    checkAuth(false, this._handleAuth);
   }
 
   _handleAuth(authResult) {
@@ -63,7 +63,7 @@ class App extends Component {
               />
           </div>
 
-          <RaisedButton label="Authenticate" primary={true} onClick={ this._authenticate.bind(this) }/>
+          <RaisedButton label="Connect with Google" primary={true} onClick={ this._authenticate }/>
 
            {/* Render children here*/}
            {this.props.children} 

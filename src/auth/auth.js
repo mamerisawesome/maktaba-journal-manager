@@ -2,15 +2,13 @@ import { orderBy } from 'lodash';
 import { hash } from './utils';
 import { get } from './localStorage';
 
-import config from './../config';
-
 /**
  * Get the user authentication status
  */
 export function checkAuth(immediate, callback) {
   window.gapi.auth.authorize({
-    'client_id': config.clientId,
-    'scope': config.scope,
+    'client_id': process.env.REACT_APP_API_CLIENTID,
+    'scope': process.env.REACT_APP_API_SCOPE,
     'immediate': immediate
   }, callback);
 }
@@ -24,7 +22,7 @@ export function load(callback) {
 
   window.gapi.client.load('sheets', 'v4', () => {
     window.gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: config.spreadsheetId,
+      spreadsheetId: process.env.REACT_APP_API_SPREADSHEETID,
       range: 'A1:C4'
     }).then((response) => {
       const data = response.result.values || [],
@@ -82,7 +80,7 @@ export function load(callback) {
  */
 export function updateCell(column, row, value, successCallback, errorCallback) {
   window.gapi.client.sheets.spreadsheets.values.update({
-    spreadsheetId: config.spreadsheetId,
+    spreadsheetId: process.env.REACT_APP_API_SPREADSHEETID,
     range: 'Sheet1!' + column + row,
     valueInputOption: 'USER_ENTERED',
     values: [ [value] ]
