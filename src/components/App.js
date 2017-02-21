@@ -17,13 +17,19 @@ class App extends Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+        authenticated: false
+    }
+
     this._authenticate = this._authenticate.bind(this)
     this._handleAuth = this._handleAuth.bind(this)
 
   }
 
   componentDidMount() {
-    window.gapi.load('client')
+    window.gapi.load(
+      'client', 
+      () => checkAuth(true, this._handleAuth) )
   }
 
   _authenticate(e) {
@@ -41,6 +47,12 @@ class App extends Component {
         authenticated: false
       })
     }
+  }
+
+  _renderConnectButton = () => {
+    return(
+        <RaisedButton label="Connect with Google" primary={true} onClick={ this._authenticate }/>
+    )
   }
 
 
@@ -63,7 +75,7 @@ class App extends Component {
               />
           </div>
 
-          <RaisedButton label="Connect with Google" primary={true} onClick={ this._authenticate }/>
+          { this.state.authenticated ?  "You have been authenticated with Google" : this._renderConnectButton() }
 
            {/* Render children here*/}
            {this.props.children} 
