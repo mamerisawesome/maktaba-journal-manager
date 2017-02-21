@@ -46,6 +46,7 @@ class App extends Component {
       this.setState({
         authenticated: true
       });
+      this._loadSheet()
     } else {
       this.setState({
         authenticated: false
@@ -63,7 +64,7 @@ class App extends Component {
     return(
         <div>
           <p>You have been authenticated with Google</p>
-          <p><RaisedButton label="Load sheet and get data" primary={true} onClick={ this._loadSheetGetData }/></p>
+          <p><RaisedButton label="Load sheet and get data" primary={true} onClick={ this._loadData }/></p>
           <p><RaisedButton label="Display data in JSON Debugger" secondary={true} onClick={ this._getDataFromSheet }/></p>
           <p><RaisedButton label="Add Margin" secondary={true} onClick={ this._addMargin }/></p>
           <p><RaisedButton label="Push to G-Slides" default={true} onClick={ this._pushGSlides } /></p>
@@ -71,21 +72,28 @@ class App extends Component {
     )
   }
 
-  _loadSheetGetData = () => {
-    window.gapi.client.load('sheets', 'v4', this._getDataFromSheet)
+  _loadSheet = () => {
+    window.gapi.client.load('sheets', 'v4')
   }
 
-  _getDataFromSheet = () => {
-    console.log('getting data from sheet loaded')
-    window.gapi.client.sheets.spreadsheets.values.get({
+  _loadData = () => {
+    const fetchedData = this._fetchDataFromSheet()
+    fetchedData
+    .then( data => {
+      this.setState( { data } )
+      console.log(this.state.data)
+    })
+  }
+
+  _fetchDataFromSheet = () => {
+    // console.log('getting data from sheet loaded')
+    return window.gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: process.env.REACT_APP_API_SPREADSHEETID,
-      range: 'A1:E4'
+      range: 'D1:D4'
     }).then((response) => {
-      console.log(response.result.values)
-      // this.setState( { data: response.results.values })
+      // console.log(response.result.values)
       return response.result.values
     })
-
   }
 
   _addMargin = () => {
