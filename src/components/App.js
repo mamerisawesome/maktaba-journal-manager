@@ -11,10 +11,19 @@ import { MuiThemeProvider,
          getMuiTheme,
          darkBaseTheme } from 'material-ui/styles'
 
-import { checkAuth, load, updateCell } from '../utils/spreadsheet';
+import { checkAuth, load } from '../utils/spreadsheet'
+import { hash } from '../utils/utils'
+import * as ls from '../utils/localStorage'
 
 
 class App extends Component {
+
+  componentDidMount() {
+    window.gapi.load('client', () => {
+      checkAuth(true, this.handleAuth.bind(this));
+    });
+  }
+
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>

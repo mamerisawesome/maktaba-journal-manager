@@ -25,7 +25,7 @@ export function load(callback) {
   window.gapi.client.load('sheets', 'v4', () => {
     window.gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: config.spreadsheetId,
-      range: 'A2:E'
+      range: 'A1:C4'
     }).then((response) => {
       const data = response.result.values || [],
             authors = [];
