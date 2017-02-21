@@ -75,14 +75,4 @@ export function load(callback) {
   });
 }
 
-/**
- * Update a single cell value
- */
-export function updateCell(column, row, value, successCallback, errorCallback) {
-  window.gapi.client.sheets.spreadsheets.values.update({
-    spreadsheetId: process.env.REACT_APP_API_SPREADSHEETID,
-    range: 'Sheet1!' + column + row,
-    valueInputOption: 'USER_ENTERED',
-    values: [ [value] ]
-  }).then(successCallback, errorCallback);
-}
+
