@@ -11,6 +11,15 @@ An example of the boilerplate can be seen [here at https://react-material-ui.her
 3. Run ```cp .env.example .env```
 4. Start React App with ```npm run watch```
 5. Open React App at ```localhost:9000``` 
+6. Enable Google API here [console.developers.google.com/apis](https://console.developers.google.com/apis/).
+
+# Configuration
+1. Add three environmental variables
+```
+REACT_APP_API_CLIENTID=___YOU_CLIENT_ID___
+REACT_APP_API_SCOPE=https://www.googleapis.com/auth/spreadsheets
+REACT_APP_API_SPREADSHEETID=___YOUR_GOOGLE_SHEET_ID____
+```
 
 ### Notes
 1. Update any environment variables where applicable in your local ```.env``` file

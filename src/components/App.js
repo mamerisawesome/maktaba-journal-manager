@@ -4,25 +4,45 @@ import '../css/style.css'
 import { Link } from 'react-router-dom'
 
 //material-ui components
-import { TextField } from 'material-ui/';
+import { TextField, RaisedButton } from 'material-ui/';
 
 //theme related material-ui
 import { MuiThemeProvider,
          getMuiTheme,
          darkBaseTheme } from 'material-ui/styles'
 
-import { checkAuth, load } from '../utils/spreadsheet'
-import { hash } from '../utils/utils'
-import * as ls from '../utils/localStorage'
-
+import { checkAuth } from './../auth/auth'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    // this._authenticate = this._authenticate.bind(this)
+    // this._handleAuth = this._handleAuth.bind(this)
+
+  }
 
   componentDidMount() {
-    window.gapi.load('client', () => {
-      checkAuth(true, this.handleAuth.bind(this));
-    });
+    window.gapi.load('client')
   }
+
+  _authenticate(e) {
+    e.preventDefault();
+    checkAuth(false, this._handleAuth.bind(this));
+  }
+
+  _handleAuth(authResult) {
+    if (authResult && !authResult.error) {
+      this.setState({
+        authenticated: true
+      });
+    } else {
+      this.setState({
+        authenticated: false
+      })
+    }
+  }
+
 
   render() {
     return (
@@ -42,6 +62,8 @@ class App extends Component {
                 fullWidth={true}
               />
           </div>
+
+          <RaisedButton label="Authenticate" primary={true} onClick={ this._authenticate.bind(this) }/>
 
            {/* Render children here*/}
            {this.props.children} 
