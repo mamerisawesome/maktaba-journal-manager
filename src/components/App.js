@@ -55,6 +55,23 @@ class App extends Component {
     )
   }
 
+  _renderAuthenticatedButtons = () => {
+    return(
+        <div>
+          <p>You have been authenticated with Google</p>
+          <p><RaisedButton label="Add Margin" secondary={true} onClick={ this._addMargin }/></p>
+          <p><RaisedButton label="Push to G-Slides" default={true} onClick={ this._pushGSlides } /></p>
+        </div>
+    )
+  }
+
+  _addMargin = () => {
+    alert('adding margin')
+  }
+
+  _pushGSlides = () => {
+    alert('pushing to G Slides')
+  }
 
   render() {
     return (
@@ -68,14 +85,9 @@ class App extends Component {
           <div className="border color-blue">
               <Link to='/PageOne'>Go to Page One</Link>
               <br/>
-              <TextField
-                hintText="Type something here"
-                floatingLabelText="This is a text field from App component"
-                fullWidth={true}
-              />
+                { this.state.authenticated ? this._renderAuthenticatedButtons() : this._renderConnectButton() }
           </div>
 
-          { this.state.authenticated ?  "You have been authenticated with Google" : this._renderConnectButton() }
 
            {/* Render children here*/}
            {this.props.children} 
