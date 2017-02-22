@@ -46,7 +46,7 @@ class App extends Component {
       this.setState({
         authenticated: true
       });
-      this._loadSheet()
+      this._loadSheetAPI()
     } else {
       this.setState({
         authenticated: false
@@ -64,15 +64,28 @@ class App extends Component {
     return(
         <div>
           <p>You have been authenticated with Google</p>
-          <p><RaisedButton label="Load sheet and get data" primary={true} onClick={ this._loadData }/></p>
-          <p><RaisedButton label="Display data in JSON Debugger" secondary={true} onClick={ this._getDataFromSheet }/></p>
-          <p><RaisedButton label="Add Margin" secondary={true} onClick={ this._addMargin }/></p>
+          <p><RaisedButton label="Load sheet functions then get get data from sheet" primary={true} onClick={ this._loadData }/></p>
+          <p><RaisedButton label="Update single cell" secondary={true} onClick={ this._updateSingleCell }/></p>
           <p><RaisedButton label="Push to G-Slides" default={true} onClick={ this._pushGSlides } /></p>
         </div>
     )
   }
 
-  _loadSheet = () => {
+  _updateCell = (colLetter, rowNumber, value) => {
+  // _updateCell = () => {
+    window.gapi.client.sheets.spreadsheets.values.update({
+    spreadsheetId: process.env.REACT_APP_API_SPREADSHEETID,
+    range: 'Sheet1!' + colLetter + rowNumber,
+    // range: 'Sheet1!A1',
+    valueInputOption: 'USER_ENTERED',
+    values: [ [value] ]
+  })
+  .then( (response) => {
+    console.log(response)
+  }
+  )}
+
+  _loadSheetAPI = () => {
     window.gapi.client.load('sheets', 'v4')
   }
 
@@ -86,18 +99,17 @@ class App extends Component {
   }
 
   _fetchDataFromSheet = () => {
-    // console.log('getting data from sheet loaded')
     return window.gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: process.env.REACT_APP_API_SPREADSHEETID,
       range: 'D1:D4'
     }).then((response) => {
-      // console.log(response.result.values)
       return response.result.values
     })
   }
 
-  _addMargin = () => {
-    // alert('adding margin')
+  _updateSingleCell = () => {
+    const randomRow = Math.floor((Math.random() * 4) + 1)
+    this._updateCell('D', randomRow , 'RandomExample' + randomRow.toString() )
   }
 
   _pushGSlides = () => {
@@ -118,6 +130,8 @@ class App extends Component {
               <br/>
                 { this.state.authenticated ? this._renderAuthenticatedButtons() : this._renderConnectButton() }
           </div>
+
+          <JSONDebugger json={ this.state.data } />
 
 
            {/* Render children here*/}
