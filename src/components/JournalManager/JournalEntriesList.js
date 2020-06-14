@@ -26,12 +26,13 @@ const presentDate = dateInput => {
     const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d)
     const mo = new Intl.DateTimeFormat("en", { month: "long" }).format(d)
     const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d)
-    const time = new Intl.DateTimeFormat("en", {
-        hour: "numeric",
-        minute: "numeric",
-    }).format(d)
+    // TODO fixed wrong time display of time
+    // const time = new Intl.DateTimeFormat("en", {
+    //     hour: "numeric",
+    //     minute: "numeric",
+    // }).format(d)
 
-    return `${mo} ${da}, ${ye}, ${time}`;
+    return `${mo} ${da}, ${ye}`;
 };
 
 const EntryList = ({ entries, moodConstants }) => {
