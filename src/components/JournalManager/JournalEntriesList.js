@@ -1,7 +1,13 @@
 import React from 'react';
-import { List, Avatar } from 'antd';
-import { getCatImageUrl } from './catExtractionHelper';
-import { getQuote } from './quoteExtractionHelper';
+import {
+    Space,
+    List,
+    Avatar,
+    Timeline
+} from 'antd';
+import styled from 'styled-components';
+import { getCatImageUrl } from './helpers/extractor/catExtractionHelper';
+import { getQuote } from './helpers/extractor/quoteExtractionHelper';
 
 const randomCat = () => {
     const cats = [
@@ -28,7 +34,7 @@ const presentDate = dateInput => {
     return `${mo} ${da}, ${ye}, ${time}`;
 };
 
-const JournalEntriesList = ({ entries }) => {
+const EntryList = ({ entries, moodConstants }) => {
     return (
         <List
             itemLayout="vertical"
@@ -62,20 +68,50 @@ const JournalEntriesList = ({ entries }) => {
     );
 }
 
-const JournalEntriesContainer = ({ entries = [] }) => {
+const TimelineDateSpan = styled.span`
+    font-size: 0.6em;
+    color: rgb(100, 100, 100);
+`;
+
+const TimelineContentSpan = styled.span`
+    font-size: 1.0em;
+    color: rgb(80, 100, 90);
+`;
+
+const EntryTimeline = ({ entries = [], moodConstants }) => {
     return (
-        <div>
-            <JournalEntriesList entries={entries} />
-            {/* {entries.map((entry, entry_idx) => {
-                return (
-                    <div key={entry_idx}>
-                        <EntryDate>{presentDate(entry[1])}</EntryDate>
-                        <EntryContent>{} {entry[0]}</EntryContent>
-                    </div>
-                );
-            })} */}
-        </div>
+        <Timeline>
+            {
+                entries.map((entry, entryIdx) => (
+                    <Timeline.Item
+                        color={(mood => {
+                            let color = "gray";
+                            for (let i = 0; i < moodConstants.length; i += 1) {
+                                if (mood === moodConstants[i][0]) {
+                                    color = moodConstants[i][1];
+                                }
+                            }
+                            return color;
+                        })(entry[2])}
+                        key={entryIdx}
+                    >
+                        <Space>
+                            {randomCat()}
+                            <TimelineDateSpan>
+                                {presentDate(entry[1])}
+                            </TimelineDateSpan>
+                            <TimelineContentSpan>
+                                {entry[0]}
+                            </TimelineContentSpan>
+                        </Space>
+                    </Timeline.Item>
+                ))
+            }
+        </Timeline>
     );
 };
 
-export default JournalEntriesContainer;
+export {
+    EntryTimeline,
+    EntryList,
+};
