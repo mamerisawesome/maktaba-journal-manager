@@ -41,9 +41,9 @@ const processDateForSheet = () => {
     const mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d)
     const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d)
     const time = new Intl.DateTimeFormat("en", {
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric"
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
     }).format(d)
 
     return `${ye}-${mo}-${da} ${time}`
