@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import {
     Layout,
+    Row,
+    Col,
     Space,
+    Menu,
 } from 'antd';
 import { green } from '@ant-design/colors';
 import { BookFilled } from '@ant-design/icons';
@@ -21,6 +24,22 @@ const SiteHeader = styled(Header)`
     z-index: 10;
     background-color: ${green[9]};
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.19);
+`;
+
+const HeaderMenu = styled(Menu)`
+    background-color: transparent;
+    border: none;
+`;
+
+const HeaderMenuItem = styled(Menu.Item)`
+    float: right;
+    color: ${green[1]} !important;
+
+    &.ant-menu-item-selected, &:hover {
+        color: ${green[0]} !important;
+        border-bottom: 2px solid ${green[1]} !important;
+        height: 65px;
+    }
 `;
 
 const SiteContent = styled(Content)`
@@ -57,16 +76,30 @@ const LogoLinkSpace = styled(Space)`
 
 const App = () => {
     const useAuthenticated = useState(false);
+    const onLogout = () => {
+        useAuthenticated[1](false);
+    };
 
     return (
         <Layout id="main" className="layout">
             <SiteHeader>
-                <LogoLinkSpace className="logo">
-                    <LogoLink href="/">
-                        <BookFilled />
-                        <span>{PROJECT_NAME}</span>
-                    </LogoLink>
-                </LogoLinkSpace>
+                <Row>
+                    <Col span={6}>
+                        <LogoLinkSpace className="logo">
+                            <LogoLink href="/">
+                                <BookFilled />
+                                <span>{PROJECT_NAME}</span>
+                            </LogoLink>
+                        </LogoLinkSpace>
+                    </Col>
+                    <Col span={18}>
+                        <HeaderMenu mode="horizontal">
+                            {useAuthenticated[0] &&
+                                <HeaderMenuItem onClick={onLogout}>Logout</HeaderMenuItem>
+                            }
+                        </HeaderMenu>
+                    </Col>
+                </Row>
             </SiteHeader>
 
             <SiteContent className="App">

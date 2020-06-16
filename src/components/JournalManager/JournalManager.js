@@ -70,8 +70,12 @@ const JournalManager = ({ sheetId = "" }) => {
         if (data.length === 0) {
             setTimeout(() => {
                 const fetched = fetchDataFromSheet();
+                if (!fetched) {
+                    return;
+                }
+
                 fetched.then(entries => setData(entries || []));
-            }, 3000);
+            }, 5000);
         }
     });
 
