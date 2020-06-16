@@ -152,7 +152,6 @@ const JournalManager = ({ sheetId = "" }) => {
 
     const updateSingleCell = (colLetter, value) => {
         const rowNumber = data.length + 2;
-        console.log(rowNumber);
         updateCell(colLetter, rowNumber, value);
     };
 

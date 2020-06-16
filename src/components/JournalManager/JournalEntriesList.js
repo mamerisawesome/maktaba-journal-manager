@@ -1,26 +1,37 @@
 import React from 'react';
 import {
-    Space,
     List,
     Avatar,
-    Timeline
+    Timeline,
+    Row,
+    Col,
 } from 'antd';
 import styled from 'styled-components';
 import { getCatImageUrl } from './helpers/extractor/catExtractionHelper';
 import { getQuote } from './helpers/extractor/quoteExtractionHelper';
 
-const randomCat = () => {
+const getCatEmoji = (mood) => {
     const cats = [
         "😸", "🐈", "😹", "😺", "😻",
         "😼", "😽", "😾", "😿", "🙀",
         "🐱",
     ];
 
-    return cats[Math.round(Math.random() * 10)]
+    switch(mood) {
+        case "Excited": return "🙀";
+        case "Happy": return "😸";
+        case "Normal": return "😺";
+        case "Sad": return "😿";
+        case "Angry": return "😾";
+        default: return cats[Math.round(Math.random() * 10)];
+    }
 };
 
 const presentDate = dateInput => {
-    const formatted = dateInput.split(" ").join("T") + "Z";
+    const formatted = dateInput
+        .split("/").join("-")
+        .split(" ").join("T")
+        + "T";
     const d = new Date(formatted);
 
     const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d)
@@ -42,7 +53,7 @@ const EntryList = ({ entries, moodConstants }) => {
             size="small"
             dataSource={entries.map(entry => ({
                 avatar: "https://thispersondoesnotexist.com/image",
-                title: `${randomCat()} ${presentDate(entry[1])}`,
+                title: `${getCatEmoji(entry[2])} ${presentDate(entry[1])}`,
                 description: `${getQuote()}`,
                 content: `${entry[0]}`,
             }))}
@@ -70,7 +81,7 @@ const EntryList = ({ entries, moodConstants }) => {
 }
 
 const TimelineDateSpan = styled.span`
-    font-size: 0.6em;
+    font-size: 0.8em;
     color: rgb(100, 100, 100);
 `;
 
@@ -96,15 +107,19 @@ const EntryTimeline = ({ entries = [], moodConstants }) => {
                         })(entry[2])}
                         key={entryIdx}
                     >
-                        <Space>
-                            {randomCat()}
-                            <TimelineDateSpan>
-                                {presentDate(entry[1])}
-                            </TimelineDateSpan>
-                            <TimelineContentSpan>
-                                {entry[0]}
-                            </TimelineContentSpan>
-                        </Space>
+                        <Row>
+                            <Col md={24} lg={2}>
+                                {getCatEmoji(entry[2])}
+                                <TimelineDateSpan>
+                                    {presentDate(entry[1])}
+                                </TimelineDateSpan>
+                            </Col>
+                            <Col md={24} lg={22}>
+                                <TimelineContentSpan>
+                                    {entry[0]}
+                                </TimelineContentSpan>
+                            </Col>
+                        </Row>
                     </Timeline.Item>
                 ))
             }
