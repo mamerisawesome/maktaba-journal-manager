@@ -30,9 +30,8 @@ const getCatEmoji = (mood) => {
 const presentDate = dateInput => {
     const formatted = dateInput
         .split("/").join("-")
-        .split(" ").join("T")
-        + "T";
-    const d = new Date(formatted);
+        .split(" ").join("T");
+    const d = new Date(formatted + "Z");
 
     const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d)
     const mo = new Intl.DateTimeFormat("en", { month: "long" }).format(d)
