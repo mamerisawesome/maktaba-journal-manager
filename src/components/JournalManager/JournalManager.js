@@ -44,7 +44,7 @@ const processDateForSheet = () => {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit"
-    }).format(d)
+    }).format(d);
 
     return `${ye}-${mo}-${da} ${time}`
         .replace(" AM", "")
