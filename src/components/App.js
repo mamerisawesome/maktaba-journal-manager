@@ -3,7 +3,7 @@ import {
     Layout,
     Space,
 } from 'antd';
-import { green, gold } from '@ant-design/colors';
+import { green } from '@ant-design/colors';
 import { BookFilled } from '@ant-design/icons';
 import styled from 'styled-components';
 
