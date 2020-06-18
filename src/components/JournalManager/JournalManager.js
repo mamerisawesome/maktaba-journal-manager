@@ -181,7 +181,7 @@ const JournalManager = ({ sheetId = "" }) => {
                         placeholder="Don't worry, this is between us. You can type anything."
                     />
                     <Row justify="center">
-                        <Radio.Group name="radiogroup" defaultValue={"Ecstatic"}>
+                        <Radio.Group name="radiogroup" defaultValue={"Excited"}>
                             {moods.map((mood, moodIdx) => {
                                 return (<Radio.Button
                                     key={moodIdx}
