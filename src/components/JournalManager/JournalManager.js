@@ -37,6 +37,11 @@ const EntryTextareaInput = styled(Input.TextArea)`
     width: 100%;
     min-height: 200px;
     resize: none;
+
+    & textarea:hover,
+    & textarea:focus {
+        border-color: ${green[6]} !important;
+    }
 `;
 
 const AddEntryButton = styled(Button)`
@@ -224,7 +229,7 @@ const JournalManager = ({ sheetId = "" }) => {
                     <EntryTextareaInput
                         value={entryInput}
                         onChange={e => setEntryInput(e.target.value)}
-                        autoSize={false}
+                        autoSize={{ minRows: 10, maxRows: 100 }}
                         allowClear={true}
                         placeholder="Don't worry, this is between us. You can type anything."
                     />
