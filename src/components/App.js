@@ -5,14 +5,17 @@ import {
     Col,
     Space,
     Menu,
+    PageHeader,
+    notification,
 } from 'antd';
 import { green } from '@ant-design/colors';
-import { BookFilled } from '@ant-design/icons';
+import { BookFilled, BulbOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 import '../css/style.css';
 import GSheetConnector from './GSheetConnector';
 import JournalManager from './JournalManager';
+import { getQuote } from './JournalManager/helpers/extractor/quoteExtractionHelper';
 
 const PROJECT_NAME = "Maktaba";
 const PROJECT_AUTHOR = "Almer Mendoza";
@@ -74,6 +77,10 @@ const LogoLinkSpace = styled(Space)`
     }
 `;
 
+const SitePageHeader = styled(PageHeader)`
+    margin-left: -25px;
+`;
+
 const App = () => {
     const useAuthenticated = useState(false);
     const onLogout = () => {
@@ -105,7 +112,16 @@ const App = () => {
             <SiteContent className="App">
                 <div className="site-content">
                     <div>
-                        <h1>Journal Entries</h1>
+                        <SitePageHeader
+                            backIcon={<BulbOutlined />}
+                            onBack={() => notification.success({
+                                message: "To brighten your day",
+                                description: `✨ ${getQuote()}`,
+                                duration: 8,
+                            })}
+                            title="Maktaba"
+                            subTitle="Journal Entries"
+                        />
                     </div>
 
                     <GSheetConnector useAuthenticated={useAuthenticated}>

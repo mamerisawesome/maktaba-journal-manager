@@ -10,7 +10,12 @@ import {
     Row,
     notification,
 } from 'antd';
-import { EditOutlined, BarsOutlined } from '@ant-design/icons';
+import {
+    EditOutlined,
+    BarsOutlined,
+    PlusOutlined,
+} from '@ant-design/icons';
+import { green } from '@ant-design/colors';
 import styled from 'styled-components';
 
 import { EntryTimeline } from './JournalEntriesList';
@@ -34,6 +39,48 @@ const EntryTextareaInput = styled(Input.TextArea)`
     resize: none;
 `;
 
+const AddEntryButton = styled(Button)`
+    background-color: ${green[6]};
+    border-color: ${green[5]};
+    &:hover {
+        background-color: ${green[5]};
+        border-color: ${green[5]};
+    }
+`;
+
+const MoodRadioButton = styled(Radio.Button)`
+    &.ant-radio-button-wrapper-checked {
+        background-color: ${green[1]} !important;
+        border-color: ${green[4]} !important;
+        color: ${green[6]} !important;
+
+        &::before {
+            background-color: ${green[2]} !important;
+        }
+    }
+
+    &:hover {
+        color: ${green[6]} !important;
+    }
+`;
+
+const JournalTabs = styled(Tabs)`
+    & .ant-tabs-tab:hover,
+    & .ant-tabs-tab-active {
+        color: ${green[6]} !important;
+    }
+
+    & .ant-tabs-ink-bar {
+        background-color: ${green[6]} !important;
+    }
+`;
+
+const JournalTabPane = styled(Tabs.TabPane)`
+    & .ant-tabs-tab-active {
+        background-color: ${green[6]} !important;
+    }
+`;
+
 const processDateForSheet = () => {
     const d = new Date();
 
@@ -55,6 +102,7 @@ const notifySuccessSave = () => {
     notification.success({
         message: 'Saving done',
         description: `✨ ${getQuote()}`,
+        duration: 8,
     });
 };
 
@@ -166,8 +214,8 @@ const JournalManager = ({ sheetId = "" }) => {
     };
 
     return (
-        <Tabs defaultActiveKey="1">
-            <Tabs.TabPane
+        <JournalTabs defaultActiveKey="1">
+            <JournalTabPane
                 tab={<span><EditOutlined />Write entry</span>}
                 key="1"
             >
@@ -183,20 +231,26 @@ const JournalManager = ({ sheetId = "" }) => {
                     <Row justify="center">
                         <Radio.Group name="radiogroup" defaultValue={"Excited"}>
                             {moods.map((mood, moodIdx) => {
-                                return (<Radio.Button
+                                return (<MoodRadioButton
                                     key={moodIdx}
                                     onClick={() => setMoodInput(mood[0])}
                                     value={mood[0]}
                                 >
                                     {mood[0]}
-                                </Radio.Button>);
+                                </MoodRadioButton>);
                             })}
                         </Radio.Group>
                     </Row>
-                    <Button type="primary" onClick={addNewEntry}>Add Entry</Button>
+                    <AddEntryButton
+                        type="primary"
+                        onClick={addNewEntry}
+                        icon={<PlusOutlined />}
+                    >
+                        Add Entry
+                    </AddEntryButton>
                 </AddEntrySpace>
-            </Tabs.TabPane>
-            <Tabs.TabPane
+            </JournalTabPane>
+            <JournalTabPane
                 tab={<span onClick={loadData}><BarsOutlined />Entries</span>}
                 key="2"
             >
@@ -207,8 +261,8 @@ const JournalManager = ({ sheetId = "" }) => {
                         : <Empty />
                     }
                 </div>
-            </Tabs.TabPane>
-        </Tabs>
+            </JournalTabPane>
+        </JournalTabs>
     );
 };
 
