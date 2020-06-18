@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Spin, Row } from 'antd';
 import styled from 'styled-components';
 
-import { checkAuth } from '../../auth/auth';
+import { checkAuth } from './helpers';
 import GSheetIdForm from './GSheetIdForm';
 
 const LoaderContainer = styled(Row)`
