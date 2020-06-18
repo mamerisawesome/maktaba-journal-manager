@@ -21,6 +21,9 @@ import styled from 'styled-components';
 import { EntryTimeline } from './JournalEntriesList';
 import { getQuote } from './helpers/extractor/quoteExtractionHelper';
 
+import NotebookLines from "./NotebookLinesXL.png";
+import NotebookPaper from "./NotebookPaper.png";
+
 const moods = [
     ["Excited", "yellow"],
     ["Happy", "green"],
@@ -37,6 +40,31 @@ const EntryTextareaInput = styled(Input.TextArea)`
     width: 100%;
     min-height: 200px;
     resize: none;
+    font-family: Courier, monospace;
+    line-height: 40px !important;
+	padding-top: 45px;
+	padding-bottom: 34px;
+    font-size: 21px;
+    background-image:
+        url(${NotebookLines}),
+        url(${NotebookPaper});
+    background-size: 100% 40px;
+	background-repeat:repeat-y, repeat;
+
+    @media (max-width: 768px) {
+        padding-left: 50px;
+        padding-right: 20px;
+    }
+
+    @media (min-width: 769px) {
+        padding-left: 55px;
+        padding-right: 25px;
+    }
+
+    @media (min-width: 1001px) {
+        padding-left: 80px;
+        padding-right: 30px;
+    }
 
     & textarea:hover,
     & textarea:focus {
