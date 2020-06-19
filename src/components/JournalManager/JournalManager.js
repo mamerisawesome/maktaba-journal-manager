@@ -54,16 +54,26 @@ const EntryTextareaInput = styled(Input.TextArea)`
 
     @media (max-width: 768px) {
         padding-left: 50px;
-        padding-right: 20px;
+        padding-right: 10px;
     }
 
     @media (min-width: 769px) {
         padding-left: 55px;
-        padding-right: 25px;
+        padding-right: 20px;
     }
 
-    @media (min-width: 1001px) {
+    @media (min-width: 1200px) {
         padding-left: 80px;
+        padding-right: 30px;
+    }
+
+    @media (min-width: 1500px) {
+        padding-left: 90px;
+        padding-right: 30px;
+    }
+
+    @media (min-width: 1500px) {
+        padding-left: 7%;
         padding-right: 30px;
     }
 
