@@ -8,6 +8,7 @@ import {
     Input,
     Radio,
     Row,
+    Tooltip,
     notification,
 } from 'antd';
 import {
@@ -54,30 +55,31 @@ const EntryTextareaInput = styled(Input.TextArea)`
     background-size: 100% 40px;
 	background-repeat:repeat-y, repeat;
     border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 
     @media (max-width: 768px) {
         padding-left: 50px;
         padding-right: 10px;
+        font-size: 15px !important;
     }
 
     @media (min-width: 769px) {
         padding-left: 55px;
         padding-right: 20px;
+        font-size: 20px !important;
     }
 
     @media (min-width: 1200px) {
         padding-left: 80px;
         padding-right: 30px;
-    }
-
-    @media (min-width: 1500px) {
-        padding-left: 90px;
-        padding-right: 30px;
+        font-size: 24px !important;
     }
 
     @media (min-width: 1500px) {
         padding-left: 7%;
         padding-right: 30px;
+        font-size: 24px !important;
     }
 
     & textarea:hover,
@@ -87,15 +89,74 @@ const EntryTextareaInput = styled(Input.TextArea)`
 `;
 
 const AddEntryButton = styled(Button)`
-    background-color: ${green[6]};
-    border-color: ${green[5]};
-    &:hover {
+    position: fixed;
+    float: right;
+    background-color: ${green[1]};
+    border: 2px solid ${green[6]};
+    box-shadow: 0px 2px 10px gray;
+
+    @keyframes fadeIn {
+        from { opacity: 0.0; }
+        to { opacity: 1.0; }
+    }
+
+    animation-name: fadeIn;
+    animation-duration: 2s;
+
+    &:hover,
+    &:focus {
         background-color: ${green[5]};
         border-color: ${green[5]};
+
+        & svg {
+            color: ${green[1]};
+        }
+    }
+
+    & svg {
+        color: ${green[6]}
+    }
+
+    @media (max-width: 768px) {
+        right: 25px;
+        bottom: 25px;
+        box-shadow: 0px 1px 5px gray;
+    }
+
+    @media (min-width: 769px) {
+        right: 25px;
+        bottom: 25px;
+        min-width: 43px !important;
+        min-height: 43px !important;
+
+        & svg {
+            margin-top: 1px;
+            width: 28px;
+            height: 28px;
+        }
+    }
+`;
+
+const MoodRadioGroup = styled(Radio.Group)`
+    width: 100%;
+    height: 40px;
+    margin-top: -10px;
+    & .ant-radio-button-wrapper:first-child {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 8px;
+    }
+
+    & .ant-radio-button-wrapper:last-child {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 8px;
     }
 `;
 
 const MoodRadioButton = styled(Radio.Button)`
+    width: ${100 / moods.length}%;
+    height: 100%;
+    padding-top: 4.5px !important;
+    text-align: center;
     &.ant-radio-button-wrapper-checked {
         background-color: ${green[0]} !important;
         font-weight: bold !important;
@@ -243,7 +304,7 @@ const JournalManager = ({ sheetId = "" }) => {
             values: [
                 [value]
             ]
-        }).then(response => {
+        }).then(() => {
             setSavingStatus((() => {
                 let status = undefined;
                 status = colLetter === "A" ? 1 : status;
@@ -281,7 +342,7 @@ const JournalManager = ({ sheetId = "" }) => {
                         placeholder="Don't worry, this is between us. You can type anything."
                     />
                     <Row justify="center">
-                        <Radio.Group name="radiogroup" defaultValue={"Normal"}>
+                        <MoodRadioGroup name="radiogroup" defaultValue={"Normal"}>
                             {moods.map((mood, moodIdx) => {
                                 return (<MoodRadioButton
                                     color={mood[1]}
@@ -292,15 +353,19 @@ const JournalManager = ({ sheetId = "" }) => {
                                     {mood[0]}
                                 </MoodRadioButton>);
                             })}
-                        </Radio.Group>
+                        </MoodRadioGroup>
                     </Row>
-                    <AddEntryButton
-                        type="primary"
-                        onClick={addNewEntry}
-                        icon={<PlusOutlined />}
-                    >
-                        Add Entry
-                    </AddEntryButton>
+                    {entryInput &&
+                        <Tooltip title="Add new entry">
+                            <AddEntryButton
+                                type="primary"
+                                shape="circle"
+                                size="large"
+                                onClick={addNewEntry}
+                                icon={<PlusOutlined />}
+                            />
+                        </Tooltip>
+                    }
                 </AddEntrySpace>
             </JournalTabPane>
             <JournalTabPane

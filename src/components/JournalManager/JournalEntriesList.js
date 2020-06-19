@@ -115,13 +115,13 @@ const EntryTimeline = ({ entries = [], moodConstants }) => {
                         key={entryIdx}
                     >
                         <Row>
-                            <Col md={24} lg={2}>
+                            <Col span={24}>
                                 {getCatEmoji(entry[2])}
                                 <TimelineDateSpan>
                                     {presentDate(entry[1])}
                                 </TimelineDateSpan>
                             </Col>
-                            <Col md={24} lg={22}>
+                            <Col span={24}>
                                 <TimelineContentSpan>
                                     {entry[0]}
                                 </TimelineContentSpan>
