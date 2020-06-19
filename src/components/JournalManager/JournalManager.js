@@ -98,6 +98,7 @@ const AddEntryButton = styled(Button)`
 const MoodRadioButton = styled(Radio.Button)`
     &.ant-radio-button-wrapper-checked {
         background-color: ${green[0]} !important;
+        font-weight: bold !important;
         ${props => css`
             color: ${props.color} !important;
         `}
