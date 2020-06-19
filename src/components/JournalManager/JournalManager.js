@@ -50,6 +50,7 @@ const EntryTextareaInput = styled(Input.TextArea)`
         url(${NotebookPaper});
     background-size: 100% 40px;
 	background-repeat:repeat-y, repeat;
+    border-radius: 5px;
 
     @media (max-width: 768px) {
         padding-left: 50px;
