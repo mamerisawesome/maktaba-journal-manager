@@ -46,17 +46,23 @@ const HeaderMenuItem = styled(Menu.Item)`
 `;
 
 const SiteContent = styled(Content)`
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
         padding: 0px 0px;
+        margin-top: -15px;
     }
 
-    @media (min-width: 769px) {
-        padding: 50px 80px;
+    @media (min-width: 901px) {
+        padding: 0 80px;
+        padding-top: 60px;
+        padding-bottom: 50px;
     }
 `;
 
 const SiteFooter = styled(Footer)`
+    background-color: #434343;
+    color: #f5f5f5;
     text-align: center;
+    padding: 15px;
 `;
 
 const LogoLink = styled.a`
@@ -91,7 +97,7 @@ const App = () => {
         <Layout id="main" className="layout">
             <SiteHeader>
                 <Row>
-                    <Col span={6}>
+                    <Col span={8}>
                         <LogoLinkSpace className="logo">
                             <LogoLink href="/">
                                 <BookFilled />
@@ -99,7 +105,7 @@ const App = () => {
                             </LogoLink>
                         </LogoLinkSpace>
                     </Col>
-                    <Col span={18}>
+                    <Col span={16}>
                         <HeaderMenu mode="horizontal">
                             {useAuthenticated[0] &&
                                 <HeaderMenuItem onClick={onLogout}>Logout</HeaderMenuItem>
@@ -119,8 +125,8 @@ const App = () => {
                                 description: `✨ ${getQuote()}`,
                                 duration: 8,
                             })}
-                            title="Maktaba"
-                            subTitle="Journal Entries"
+                            title="Journal Entries"
+                            subTitle="Manager and List"
                         />
                     </div>
 
