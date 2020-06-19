@@ -15,8 +15,13 @@ import {
     BarsOutlined,
     PlusOutlined,
 } from '@ant-design/icons';
-import { green } from '@ant-design/colors';
-import styled from 'styled-components';
+import {
+    green,
+    yellow,
+    blue,
+    red,
+} from '@ant-design/colors';
+import styled, { css } from 'styled-components';
 
 import { EntryTimeline } from './JournalEntriesList';
 import { getQuote } from './helpers/extractor/quoteExtractionHelper';
@@ -25,11 +30,11 @@ import NotebookLines from "./NotebookLinesXL.png";
 import NotebookPaper from "./NotebookPaper.png";
 
 const moods = [
-    ["Excited", "yellow"],
-    ["Happy", "green"],
-    ["Normal", "gray"],
-    ["Sad", "blue"],
-    ["Angry", "red"]
+    ["Excited", yellow[6]],
+    ["Happy", green[6]],
+    ["Normal", "#262626"],
+    ["Sad", blue[6]],
+    ["Angry", red[6]]
 ];
 
 const AddEntrySpace = styled(Space)`
@@ -45,9 +50,7 @@ const EntryTextareaInput = styled(Input.TextArea)`
 	padding-top: 45px;
 	padding-bottom: 34px;
     font-size: 21px;
-    background-image:
-        url(${NotebookLines}),
-        url(${NotebookPaper});
+    background-image: url(${NotebookLines}), url(${NotebookPaper});
     background-size: 100% 40px;
 	background-repeat:repeat-y, repeat;
     border-radius: 5px;
@@ -94,9 +97,11 @@ const AddEntryButton = styled(Button)`
 
 const MoodRadioButton = styled(Radio.Button)`
     &.ant-radio-button-wrapper-checked {
-        background-color: ${green[1]} !important;
+        background-color: ${green[0]} !important;
+        ${props => css`
+            color: ${props.color} !important;
+        `}
         border-color: ${green[4]} !important;
-        color: ${green[6]} !important;
 
         &::before {
             background-color: ${green[2]} !important;
@@ -104,7 +109,9 @@ const MoodRadioButton = styled(Radio.Button)`
     }
 
     &:hover {
-        color: ${green[6]} !important;
+        ${props => css`
+            color: ${props.color} !important;
+        `}
     }
 `;
 
@@ -276,6 +283,7 @@ const JournalManager = ({ sheetId = "" }) => {
                         <Radio.Group name="radiogroup" defaultValue={"Excited"}>
                             {moods.map((mood, moodIdx) => {
                                 return (<MoodRadioButton
+                                    color={mood[1]}
                                     key={moodIdx}
                                     onClick={() => setMoodInput(mood[0])}
                                     value={mood[0]}
