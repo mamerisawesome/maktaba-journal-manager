@@ -49,6 +49,7 @@ const SiteContent = styled(Content)`
     width: 100%;
 
     @media (max-width: 900px) {
+        background-color: white;
         padding: 0px 0px;
         margin-top: -15px;
     }
