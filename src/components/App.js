@@ -46,6 +46,8 @@ const HeaderMenuItem = styled(Menu.Item)`
 `;
 
 const SiteContent = styled(Content)`
+    width: 100%;
+
     @media (max-width: 900px) {
         padding: 0px 0px;
         margin-top: -15px;
@@ -54,15 +56,27 @@ const SiteContent = styled(Content)`
     @media (min-width: 901px) {
         padding: 0 80px;
         padding-top: 60px;
-        padding-bottom: 50px;
+        padding-bottom: 100px;
+        & .site-content {
+            box-shadow:
+                0 4px 8px 0 rgba(0, 0, 0, 0.2),
+                0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
     }
 `;
 
 const SiteFooter = styled(Footer)`
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
     background-color: #434343;
     color: #f5f5f5;
     text-align: center;
     padding: 15px;
+`;
+
+const SitePageHeader = styled(PageHeader)`
+    margin-left: -25px;
 `;
 
 const LogoLink = styled.a`
@@ -81,10 +95,6 @@ const LogoLinkSpace = styled(Space)`
     @media (min-width: 769px) {
         margin: 0px 30px;
     }
-`;
-
-const SitePageHeader = styled(PageHeader)`
-    margin-left: -25px;
 `;
 
 const App = () => {
