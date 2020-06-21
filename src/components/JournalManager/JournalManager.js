@@ -47,13 +47,9 @@ const EntryTextareaInput = styled(Input.TextArea)`
     min-height: 200px;
     resize: none;
     font-family: Courier, monospace;
-    line-height: 40px !important;
-	padding-top: 45px;
-	padding-bottom: 34px;
-    font-size: 21px;
+    padding-bottom: 34px;
     background-image: url(${NotebookLines}), url(${NotebookPaper});
-    background-size: 100% 40px;
-	background-repeat:repeat-y, repeat;
+    background-repeat:repeat-y, repeat;
     border-radius: 5px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -61,25 +57,45 @@ const EntryTextareaInput = styled(Input.TextArea)`
     @media (max-width: 768px) {
         padding-left: 50px;
         padding-right: 10px;
-        font-size: 15px !important;
+        padding-top: 32px;
+        line-height: 30px !important;
+        background-size: 100% 30px;
+        & textarea {
+            font-size: 14px !important;
+        }
     }
 
     @media (min-width: 769px) {
         padding-left: 55px;
         padding-right: 20px;
-        font-size: 20px !important;
+        padding-top: 38px;
+        background-size: 100% 35px;
+        line-height: 35px !important;
+        & textarea {
+            font-size: 14px !important;
+        }
     }
 
     @media (min-width: 1200px) {
         padding-left: 80px;
         padding-right: 30px;
-        font-size: 24px !important;
+        padding-top: 38px;
+        background-size: 100% 35px;
+        line-height: 35px !important;
+        & textarea {
+            font-size: 18px !important;
+        }
     }
 
     @media (min-width: 1500px) {
         padding-left: 7%;
         padding-right: 30px;
-        font-size: 24px !important;
+        padding-top: 40px;
+        background-size: 100% 40px;
+        line-height: 40px !important;
+        & textarea {
+            font-size: 20px !important;
+        }
     }
 
     & textarea:hover,
