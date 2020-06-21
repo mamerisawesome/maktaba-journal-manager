@@ -107,6 +107,7 @@ const EntryTextareaInput = styled(Input.TextArea)`
 const AddEntryButton = styled(Button)`
     position: fixed;
     float: right;
+    z-index: 11 !important;
     background-color: ${green[1]};
     border: 2px solid ${green[6]};
     box-shadow: 0px 2px 10px gray;
@@ -372,7 +373,7 @@ const JournalManager = ({ sheetId = "" }) => {
                         </MoodRadioGroup>
                     </Row>
                     {entryInput &&
-                        <Tooltip title="Add new entry">
+                        <Tooltip placement="left" title="Add new entry">
                             <AddEntryButton
                                 type="primary"
                                 shape="circle"

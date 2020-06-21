@@ -68,6 +68,7 @@ const SiteContent = styled(Content)`
 
 const SiteFooter = styled(Footer)`
     position: absolute;
+    z-index: 10 !important;
     width: 100%;
     bottom: 0px;
     background-color: #434343;
