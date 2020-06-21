@@ -72,7 +72,7 @@ const EntryTextareaInput = styled(Input.TextArea)`
         background-size: 100% 35px;
         line-height: 35px !important;
         & textarea {
-            font-size: 14px !important;
+            font-size: 15px !important;
         }
     }
 
