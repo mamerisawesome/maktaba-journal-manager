@@ -101,7 +101,7 @@ const EntryTimeline = ({ entries = [], moodConstants }) => {
     return (
         <Timeline>
             {
-                entries.map((entry, entryIdx) => (
+                entries.reverse().map((entry, entryIdx) => (
                     <Timeline.Item
                         color={(mood => {
                             let color = "gray";
