@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React from "react";
 import {
     Layout,
     Row,
     Col,
     Space,
-    Menu,
     PageHeader,
     notification,
-} from 'antd';
-import { green } from '@ant-design/colors';
-import { BookFilled, BulbOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
+} from "antd";
+import { green } from "@ant-design/colors";
+import { BookFilled, BulbOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 
-import '../css/style.css';
-import GSheetConnector from './GSheetConnector';
-import JournalManager from './JournalManager';
-import { getQuote } from './JournalManager/helpers/extractor/quoteExtractionHelper';
+import JournalManager from "components/JournalManager";
+import { getQuote } from "utils/extractor/quote";
+
+import "../css/style.css";
 
 const PROJECT_NAME = "Maktaba";
 const PROJECT_AUTHOR = "Almer Mendoza";
@@ -27,22 +26,6 @@ const SiteHeader = styled(Header)`
     z-index: 10;
     background-color: ${green[9]};
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.19);
-`;
-
-const HeaderMenu = styled(Menu)`
-    background-color: transparent;
-    border: none;
-`;
-
-const HeaderMenuItem = styled(Menu.Item)`
-    float: right;
-    color: ${green[1]} !important;
-
-    &.ant-menu-item-selected, &:hover {
-        color: ${green[0]} !important;
-        border-bottom: 2px solid ${green[1]} !important;
-        height: 65px;
-    }
 `;
 
 const SiteContent = styled(Content)`
@@ -100,11 +83,6 @@ const LogoLinkSpace = styled(Space)`
 `;
 
 const App = () => {
-    const useAuthenticated = useState(false);
-    const onLogout = () => {
-        useAuthenticated[1](false);
-    };
-
     return (
         <Layout id="main" className="layout">
             <SiteHeader>
@@ -116,13 +94,6 @@ const App = () => {
                                 <span>{PROJECT_NAME}</span>
                             </LogoLink>
                         </LogoLinkSpace>
-                    </Col>
-                    <Col span={16}>
-                        <HeaderMenu mode="horizontal">
-                            {useAuthenticated[0] &&
-                                <HeaderMenuItem onClick={onLogout}>Logout</HeaderMenuItem>
-                            }
-                        </HeaderMenu>
                     </Col>
                 </Row>
             </SiteHeader>
@@ -141,12 +112,7 @@ const App = () => {
                             subTitle="Manager and List"
                         />
                     </div>
-
-                    <GSheetConnector useAuthenticated={useAuthenticated}>
-                        {sheetId => (
-                            <JournalManager sheetId={sheetId} />
-                        )}
-                    </GSheetConnector>
+                    <JournalManager />
                 </div>
             </SiteContent>
 

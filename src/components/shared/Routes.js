@@ -1,10 +1,9 @@
-import React from 'react'
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 //Routes
-import NotFound from './NotFound'
-import App from './../App';
-
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import NotFound from "components/shared/NotFound";
+import App from "../App";
 
 const Routes = () => {
   return (
@@ -14,7 +13,7 @@ const Routes = () => {
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default Routes
+export default Routes;

@@ -1,5 +1,5 @@
 {
-  "name": "react-gsheets",
+  "name": "maktaba-journal-manager",
   "license": "MIT",
   "version": "0.0.1",
   "devDependencies": {
@@ -16,11 +16,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "styled-components": "^5.1.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/iankhor/react-gsheets"
+    "styled-components": "^5.1.1",
+    "zustand": "^3.2.0"
   },
   "scripts": {
     "start": "PORT=9000 react-scripts start",

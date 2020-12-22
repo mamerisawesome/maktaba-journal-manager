@@ -1,72 +1,37 @@
-import React from 'react';
+import React from "react";
 import {
     List,
     Avatar,
     Timeline,
     Row,
     Col,
-} from 'antd';
-import styled from 'styled-components';
-import { getCatImageUrl } from './helpers/extractor/catExtractionHelper';
-import { getQuote } from './helpers/extractor/quoteExtractionHelper';
+} from "antd";
+import styled from "styled-components";
 
-const getCatEmoji = (mood) => {
-    const cats = [
-        "😸", "🐈", "😹", "😺", "😻",
-        "😼", "😽", "😾", "😿", "🙀",
-        "🐱",
-    ];
+import { getCatEmoji, getCatImageUrl } from "utils/extractor/cat";
 
-    switch(mood) {
-        case "Excited": return "🙀";
-        case "Happy": return "😸";
-        case "Normal": return "😺";
-        case "Sad": return "😿";
-        case "Angry": return "😾";
-        default: return cats[Math.round(Math.random() * 10)];
-    }
-};
+import { constants } from "stores/mood";
+import { useJournal } from "stores/journal";
 
-const presentDate = dateInput => {
-    let formatted = dateInput.split("/").join("-");
-    formatted = formatted.split(" ");
-    formatted[1] = formatted[1].split(":")
-        .map(timeParam => {
-            if (timeParam.length === 1) {
-                return "0" + timeParam;
-            }
-            return timeParam;
-        })
-        .join(":");
-    formatted.join("T");
+import { getQuote } from "utils/extractor/quote";
+import { presentDate } from "utils";
 
-    const d = new Date(formatted + "Z");
-    const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d)
-    const mo = new Intl.DateTimeFormat("en", { month: "long" }).format(d)
-    const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d)
-    // TODO fixed wrong time display of time
-    // const time = new Intl.DateTimeFormat("en", {
-    //     hour: "numeric",
-    //     minute: "numeric",
-    // }).format(d)
+const EntryList = () => {
+    const entries = useJournal((state) => state.mood);
 
-    return `${mo} ${da}, ${ye}`;
-};
-
-const EntryList = ({ entries, moodConstants }) => {
     return (
         <List
             itemLayout="vertical"
             size="small"
-            dataSource={entries.map(entry => ({
+            dataSource={entries.map(({ entry, mood, dateCreated }) => ({
                 avatar: "https://thispersondoesnotexist.com/image",
-                title: `${getCatEmoji(entry[2])} ${presentDate(entry[1])}`,
+                title: `${getCatEmoji(mood)} ${presentDate(dateCreated)}`,
                 description: `${getQuote()}`,
-                content: `${entry[0]}`,
+                content: `${entry}`,
             }))}
-            renderItem={item => (
+            renderItem={({ title, avatar, href, description, content}) => (
                 <List.Item
-                    key={item.title}
+                    key={title}
                     extra={
                         <img
                             width={220}
@@ -76,11 +41,11 @@ const EntryList = ({ entries, moodConstants }) => {
                     }
                 >
                     <List.Item.Meta
-                        avatar={<Avatar src={item.avatar} />}
-                        title={<a href={item.href}>{item.title}</a>}
-                        description={item.description}
+                        avatar={<Avatar src={avatar} />}
+                        title={<a href={href}>{title}</a>}
+                        description={description}
                     />
-                    {item.content}
+                    {content}
                 </List.Item>
             )}
         />
@@ -97,33 +62,43 @@ const TimelineContentSpan = styled.span`
     color: rgb(80, 100, 90);
 `;
 
-const EntryTimeline = ({ entries = [], moodConstants }) => {
+const EntryTimeline = () => {
+    const entries = useJournal((state) => state.entries);
+
+    if (!entries || !entries.length) {
+        return (
+            <p>No entries yet {getCatEmoji("Sad")}</p>
+        );
+    }
+
+    const getColor = (mood) => {
+        let color = "gray";
+        for (let i = 0; i < constants.moods.length; i += 1) {
+            if (mood === constants.moods[i][0]) {
+                color = constants.moods[i][1];
+            }
+        }
+        return color;
+    };
+
     return (
         <Timeline>
             {
                 entries.reverse().map((entry, entryIdx) => (
                     <Timeline.Item
-                        color={(mood => {
-                            let color = "gray";
-                            for (let i = 0; i < moodConstants.length; i += 1) {
-                                if (mood === moodConstants[i][0]) {
-                                    color = moodConstants[i][1];
-                                }
-                            }
-                            return color;
-                        })(entry[2])}
+                        color={getColor(entry.mood)}
                         key={entryIdx}
                     >
                         <Row>
                             <Col span={24}>
-                                {getCatEmoji(entry[2])}
+                                {getCatEmoji(entry.mood)}
                                 <TimelineDateSpan>
-                                    {presentDate(entry[1])}
+                                    {presentDate(entry.dateCreated)}
                                 </TimelineDateSpan>
                             </Col>
                             <Col span={24}>
                                 <TimelineContentSpan>
-                                    {entry[0]}
+                                    {entry.entry}
                                 </TimelineContentSpan>
                             </Col>
                         </Row>

@@ -27,8 +27,23 @@ const getRandomCat = () => {
     }
 };
 
-const getCatImageUrl = () => {
+export const getCatImageUrl = () => {
     return "https://d2ph5fj80uercy.cloudfront.net/" + getRandomCat();
 };
 
-export { getCatImageUrl };
+export const getCatEmoji = (mood) => {
+    const cats = [
+        "😸", "🐈", "😹", "😺", "😻",
+        "😼", "😽", "😾", "😿", "🙀",
+        "🐱",
+    ];
+
+    switch(mood) {
+        case "Excited": return "🙀";
+        case "Happy": return "😸";
+        case "Normal": return "😺";
+        case "Sad": return "😿";
+        case "Angry": return "😾";
+        default: return cats[Math.round(Math.random() * 10)];
+    }
+};
