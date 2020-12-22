@@ -7,7 +7,4 @@ export const get = (key) => {
   return JSON.parse(localStorage.getItem(key));
 };
 
-export default {
-  save,
-  get,
-};
+export default { save, get };

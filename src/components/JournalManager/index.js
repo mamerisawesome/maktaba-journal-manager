@@ -1,1 +1,1 @@
-export { default } from './JournalManager';
+export { default } from "./JournalManager";
